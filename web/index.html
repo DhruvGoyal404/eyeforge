@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EyeForge Live</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --bg: #121216; --panel: #1c1c22; --fg: #e8e8ea; --muted: #9a9aa3; --acc: #ffc400; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.4 system-ui, sans-serif; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 320px; height: 100vh; }
+  #view { position: relative; min-height: 50vh; }
+  #view canvas { display: block; width: 100%; height: 100%; }
+  #hud { position: absolute; left: 12px; bottom: 12px; font: 12px ui-monospace, monospace;
+         background: #000a; padding: 8px 10px; border-radius: 6px; white-space: pre; }
+  aside { background: var(--panel); padding: 16px; overflow-y: auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; color: var(--acc); }
+  p.sub { margin: 0 0 14px; color: var(--muted); }
+  fieldset { border: 1px solid #333; border-radius: 8px; margin: 0 0 12px; padding: 10px; }
+  legend { color: var(--muted); padding: 0 4px; }
+  label { display: grid; grid-template-columns: 82px 1fr 44px; gap: 6px; align-items: center; margin: 6px 0; }
+  input[type=range] { width: 100%; }
+  button, select { width: 100%; margin: 4px 0; padding: 8px; border-radius: 6px; border: 1px solid #444;
+                   background: #2a2a32; color: var(--fg); font: inherit; cursor: pointer; }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--acc); }
+  #cam { width: 100%; border-radius: 6px; transform: scaleX(-1); display: none; margin-top: 6px; }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; height: auto; } #view { height: 60vh; } }
+</style>
+<script type="importmap">
+  { "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+</head>
+<body>
+<main>
+  <div id="view"><div id="hud">loading…</div></div>
+  <aside>
+    <h1>EyeForge Live</h1>
+    <p class="sub">Same physiology as the Blender wrapper (Listing's law, vergence at 35 cm, lid coupling, near-triad pupil).</p>
+    <fieldset><legend>Mode</legend>
+      <select id="mode" aria-label="Input mode">
+        <option value="manual">Manual sliders</option>
+        <option value="webcam">Webcam gaze (MediaPipe)</option>
+      </select>
+      <video id="cam" playsinline muted></video>
+      <button id="calib" hidden>Calibrate: look at the screen center</button>
+      <label>sensitivity <input id="gain" type="range" min="2" max="14" step="0.5" value="7"><span id="gainv">7</span></label>
+    </fieldset>
+    <fieldset><legend>Gaze</legend>
+      <label>h <input id="h" type="range" min="-1" max="1" step="0.01" value="0"><span id="hv">0</span></label>
+      <label>v <input id="v" type="range" min="-1" max="1" step="0.01" value="0"><span id="vv">0</span></label>
+      <button id="reset">eyes.reset()</button>
+      <button id="seq">Play 10-frame clockwise sequence</button>
+    </fieldset>
+    <fieldset><legend>Physiology</legend>
+      <select id="profile" aria-label="Profile">
+        <option value="physio">physio (default)</option>
+        <option value="spec">spec (look-at)</option>
+        <option value="physio_full">physio_full (kappa + L2)</option>
+      </select>
+      <label>pupil mm <input id="pupil" type="range" min="0" max="8" step="0.1" value="0"><span id="pupilv">auto</span></label>
+      <label>view <select id="lens" aria-label="Lens"><option value="spec">112 mm (spec camera)</option><option value="wide">35 mm wide</option></select><span></span></label>
+    </fieldset>
+    <p class="sub">Camera: 40 cm in front of the eye midpoint, locked. Target: 35 cm, ±5 cm.</p>
+  </aside>
+</main>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

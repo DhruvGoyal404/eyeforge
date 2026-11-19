@@ -79,7 +79,7 @@ git clone https://github.com/DhruvGoyal404/eyeforge && cd eyeforge
 pip install -r requirements.txt && export BLENDER_PATH=/path/to/blender
 python wrapper/eyes.py sequence --out renders     # or ./run_all.sh, or docker run eyeforge
 ```
-Demo video `docs/demo.mp4` (0 s): API calls → clockwise sequence → direction check → profiles →
+Demo video `docs/demo.mp4` (64 s): API calls → clockwise sequence → direction check → profiles →
 saccades/blinks → results. Live: `npx serve web` (webcam gaze drives the avatar).
 
 ## 7. Brownie points: realism
