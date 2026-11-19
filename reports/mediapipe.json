@@ -1,0 +1,164 @@
+{
+  "images": 11,
+  "detected": 11,
+  "mean_err_px": 11.98077427745473,
+  "max_err_px": 16.56070018190362,
+  "direction_agreement_cos_mean": 0.9748107992022614,
+  "per_image": [
+    {
+      "image": "center.png",
+      "detected": true,
+      "mediapipe_R": [
+        261.63311767578125,
+        524.3060302734375
+      ],
+      "err_px_R": 12.343896276267936,
+      "mediapipe_L": [
+        768.8760986328125,
+        523.6507568359375
+      ],
+      "err_px_L": 13.772217796786647
+    },
+    {
+      "image": "frame_00.png",
+      "detected": true,
+      "mediapipe_R": [
+        266.1990966796875,
+        510.23284912109375
+      ],
+      "err_px_R": 15.958710106291333,
+      "mediapipe_L": [
+        766.6129150390625,
+        510.4647216796875
+      ],
+      "err_px_L": 16.56070018190362
+    },
+    {
+      "image": "frame_01.png",
+      "detected": true,
+      "mediapipe_R": [
+        271.317138671875,
+        514.2945556640625
+      ],
+      "err_px_R": 16.21003837429486,
+      "mediapipe_L": [
+        775.877197265625,
+        513.8323974609375
+      ],
+      "err_px_L": 16.460545156878435
+    },
+    {
+      "image": "frame_02.png",
+      "detected": true,
+      "mediapipe_R": [
+        277.5712890625,
+        520.2225341796875
+      ],
+      "err_px_R": 13.554886750053642,
+      "mediapipe_L": [
+        779.3577880859375,
+        518.06103515625
+      ],
+      "err_px_L": 11.50964469450328
+    },
+    {
+      "image": "frame_03.png",
+      "detected": true,
+      "mediapipe_R": [
+        274.88671875,
+        529.6009521484375
+      ],
+      "err_px_R": 12.915462023760334,
+      "mediapipe_L": [
+        776.1328125,
+        527.089111328125
+      ],
+      "err_px_L": 9.902785686585496
+    },
+    {
+      "image": "frame_04.png",
+      "detected": true,
+      "mediapipe_R": [
+        274.07086181640625,
+        533.20361328125
+      ],
+      "err_px_R": 7.471045420115033,
+      "mediapipe_L": [
+        773.7069091796875,
+        531.0484619140625
+      ],
+      "err_px_L": 5.319848197854142
+    },
+    {
+      "image": "frame_05.png",
+      "detected": true,
+      "mediapipe_R": [
+        266.02569580078125,
+        533.4615478515625
+      ],
+      "err_px_R": 5.472431637269279,
+      "mediapipe_L": [
+        765.374267578125,
+        530.7655029296875
+      ],
+      "err_px_L": 4.113158856700067
+    },
+    {
+      "image": "frame_06.png",
+      "detected": true,
+      "mediapipe_R": [
+        257.2283935546875,
+        533.4512939453125
+      ],
+      "err_px_R": 8.863641762249346,
+      "mediapipe_L": [
+        758.5391845703125,
+        531.1143798828125
+      ],
+      "err_px_L": 8.810220173233757
+    },
+    {
+      "image": "frame_07.png",
+      "detected": true,
+      "mediapipe_R": [
+        252.04315185546875,
+        528.1995849609375
+      ],
+      "err_px_R": 12.456120187000034,
+      "mediapipe_L": [
+        753.3607177734375,
+        526.7381591796875
+      ],
+      "err_px_L": 12.40992241505332
+    },
+    {
+      "image": "frame_08.png",
+      "detected": true,
+      "mediapipe_R": [
+        252.2813720703125,
+        518.8201904296875
+      ],
+      "err_px_R": 13.813724321613217,
+      "mediapipe_L": [
+        754.4637451171875,
+        518.5733642578125
+      ],
+      "err_px_L": 14.994607820404394
+    },
+    {
+      "image": "frame_09.png",
+      "detected": true,
+      "mediapipe_R": [
+        257.6221923828125,
+        511.68438720703125
+      ],
+      "err_px_R": 14.776460298479613,
+      "mediapipe_L": [
+        760.0478515625,
+        511.510498046875
+      ],
+      "err_px_L": 15.886965966706272
+    }
+  ],
+  "note": "MediaPipe Face Landmarker (float16 v1) run on each render after a 0.5x downscale onto a padded canvas; iris landmarks 468/473 compared with our apparent (refraction-aware) pupil centroids. MediaPipe is trained on real faces and its landmark noise is a few px at this scale, so this is a sanity check, not ground truth."
+}

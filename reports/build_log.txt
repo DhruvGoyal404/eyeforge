@@ -1,0 +1,16 @@
+[build_scene] IPD: default 57.66 mm, eye-trans-out weight 0.580 -> 63.00 mm
+[build_scene] sphere fit L: center [0.0315, -0.11164, 1.49898] r 15.90 mm max residual 0.211 mm
+[build_scene] sphere fit R: center [-0.0315, -0.11164, 1.49898] r 15.90 mm max residual 0.211 mm
+[build_scene] forward axis F = [0.0, -1.0, 0.0] (eyes are 17.4 mm in front of the head centroid)
+[build_scene] bone eye.L: head-to-center 0.084 mm -> 0.0001 mm
+[build_scene] bone orbicularis03.L: head-to-center 0.084 mm -> 0.0001 mm
+[build_scene] bone orbicularis04.L: head-to-center 0.084 mm -> 0.0001 mm
+[build_scene] bone eye.R: head-to-center 0.084 mm -> 0.0001 mm
+[build_scene] bone orbicularis03.R: head-to-center 0.084 mm -> 0.0001 mm
+[build_scene] bone orbicularis04.R: head-to-center 0.084 mm -> 0.0001 mm
+[build_scene] eye: sclera R 15.65 mm, apex 17.16 mm, pupil plane 14.27 mm, iris 2.84 mm behind apex
+[build_scene] lid margins L: vertices {'upper': 6785, 'lower': 6826}, rest aperture 12.22 mm, closed gap 1.89 mm
+[build_scene] lid margins R: vertices {'upper': 1, 'lower': 42}, rest aperture 12.22 mm, closed gap 1.89 mm
+[build_scene] lid bone efficiency (margin arc / bone arc): upper 0.920, lower 0.925
+[build_scene] lens: 112.0 mm (framing allows <= 112.0 mm, 15 px shift needs >= 102.7 mm); predicted min pupil shift 16.4 px
+[build_scene] saved scene.blend

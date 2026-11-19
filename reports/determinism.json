@@ -1,0 +1,10 @@
+{
+  "paths": [
+    "F:\\Hackathons\\Samsung Hack 2026\\eyeforge\\reports\\determinism\\det_0.png",
+    "F:\\Hackathons\\Samsung Hack 2026\\eyeforge\\reports\\determinism\\det_1.png"
+  ],
+  "samples": 48,
+  "seconds": 240.14,
+  "mean_abs_diff_8bit": 0.0,
+  "max_abs_diff_8bit": 0.0
+}

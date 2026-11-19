@@ -1,0 +1,9 @@
+{
+  "max_err_px": 0.0008669038941545091,
+  "mean_err_px": 0.0003239952400225969,
+  "n_points": 58,
+  "cam_to_M_m": 0.39999997943875515,
+  "cam_offset_along_F_m": 0.399999979438751,
+  "look_dir_angle_deg": 0.0,
+  "euler_vs_mathutils_max_rad": 1.3466895154579106e-08
+}

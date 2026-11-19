@@ -1,0 +1,507 @@
+{
+  "frames": 10,
+  "reprojection_error_px": {
+    "mean": 0.020439938754968297,
+    "max": 0.03995502078195015
+  },
+  "refraction_shift_px": {
+    "mean": 0.7084105837390543,
+    "max": 0.781358853556155
+  },
+  "pupil_shift_px": {
+    "min": 16.36409552285307,
+    "max": 16.798566799631768
+  },
+  "vergence_center_deg": {
+    "measured": 10.285520337966451,
+    "expected": 10.285520337966513
+  },
+  "torsion_deg": {
+    "physio_max": 0.0,
+    "spec_max": 0.5614311696712027,
+    "physio_full_max": 0.18022913819851635,
+    "spec_at_30deg_oblique": 4.7697056640865485
+  },
+  "lid_aperture_mm": {
+    "min": 10.620479960885168,
+    "max": 13.771495671146553,
+    "center": 12.216186073108245
+  },
+  "render_seconds_per_frame": {
+    "mean": 139.41199999999998,
+    "max": 238.21
+  },
+  "pipeline_seconds": 1590.9,
+  "lens_mm": 112.0,
+  "samples": 48,
+  "camera": {
+    "max_err_px": 0.0008669038941545091,
+    "mean_err_px": 0.0003239952400225969,
+    "n_points": 58,
+    "cam_to_M_m": 0.39999997943875515,
+    "cam_offset_along_F_m": 0.399999979438751,
+    "look_dir_angle_deg": 0.0,
+    "euler_vs_mathutils_max_rad": 1.3466895154579106e-08
+  },
+  "direction": {
+    "rows": [
+      {
+        "direction": "left",
+        "eye": "L",
+        "dx": -17.024112548441394,
+        "dy": 0.005715225307199034,
+        "on_axis_px": 17.024112548441394,
+        "off_axis_ratio": 0.0003357135528173114,
+        "passed": true
+      },
+      {
+        "direction": "left",
+        "eye": "R",
+        "dx": -17.483706202348543,
+        "dy": 0.015668614652270207,
+        "on_axis_px": 17.483706202348543,
+        "off_axis_ratio": 0.0008961838222930949,
+        "passed": true
+      },
+      {
+        "direction": "right",
+        "eye": "L",
+        "dx": 17.50374770618123,
+        "dy": 0.004209363480413231,
+        "on_axis_px": 17.50374770618123,
+        "off_axis_ratio": 0.00024048355535464822,
+        "passed": true
+      },
+      {
+        "direction": "right",
+        "eye": "R",
+        "dx": 17.058145709866437,
+        "dy": 0.012099053203144194,
+        "on_axis_px": 17.058145709866437,
+        "off_axis_ratio": 0.0007092830257714412,
+        "passed": true
+      },
+      {
+        "direction": "up",
+        "eye": "L",
+        "dx": 0.007021743811719716,
+        "dy": -17.30352735795219,
+        "on_axis_px": 17.30352735795219,
+        "off_axis_ratio": 0.00040579840551948097,
+        "passed": true
+      },
+      {
+        "direction": "up",
+        "eye": "R",
+        "dx": 0.040162283218762695,
+        "dy": -17.282514211053012,
+        "on_axis_px": 17.282514211053012,
+        "off_axis_ratio": 0.002323868085875894,
+        "passed": true
+      },
+      {
+        "direction": "down",
+        "eye": "L",
+        "dx": 0.009288925839769036,
+        "dy": 17.29814553511642,
+        "on_axis_px": 17.29814553511642,
+        "off_axis_ratio": 0.0005369896918089792,
+        "passed": true
+      },
+      {
+        "direction": "down",
+        "eye": "R",
+        "dx": 0.014962118271114377,
+        "dy": 17.303418774793215,
+        "on_axis_px": 17.303418774793215,
+        "off_axis_ratio": 0.0008646914500451476,
+        "passed": true
+      }
+    ],
+    "reset_px": [
+      0.0,
+      0.0
+    ],
+    "passed": true,
+    "min_shift_px": 15.0,
+    "max_offaxis_ratio": 0.3,
+    "reset_tol_px": 0.5,
+    "fast": false
+  },
+  "determinism": {
+    "paths": [
+      "F:\\Hackathons\\Samsung Hack 2026\\eyeforge\\reports\\determinism\\det_0.png",
+      "F:\\Hackathons\\Samsung Hack 2026\\eyeforge\\reports\\determinism\\det_1.png"
+    ],
+    "samples": 48,
+    "seconds": 240.14,
+    "mean_abs_diff_8bit": 0.0,
+    "max_abs_diff_8bit": 0.0
+  },
+  "mediapipe": {
+    "images": 11,
+    "detected": 11,
+    "mean_err_px": 11.98077427745473,
+    "max_err_px": 16.56070018190362,
+    "direction_agreement_cos_mean": 0.9748107992022614,
+    "per_image": [
+      {
+        "image": "center.png",
+        "detected": true,
+        "mediapipe_R": [
+          261.63311767578125,
+          524.3060302734375
+        ],
+        "err_px_R": 12.343896276267936,
+        "mediapipe_L": [
+          768.8760986328125,
+          523.6507568359375
+        ],
+        "err_px_L": 13.772217796786647
+      },
+      {
+        "image": "frame_00.png",
+        "detected": true,
+        "mediapipe_R": [
+          266.1990966796875,
+          510.23284912109375
+        ],
+        "err_px_R": 15.958710106291333,
+        "mediapipe_L": [
+          766.6129150390625,
+          510.4647216796875
+        ],
+        "err_px_L": 16.56070018190362
+      },
+      {
+        "image": "frame_01.png",
+        "detected": true,
+        "mediapipe_R": [
+          271.317138671875,
+          514.2945556640625
+        ],
+        "err_px_R": 16.21003837429486,
+        "mediapipe_L": [
+          775.877197265625,
+          513.8323974609375
+        ],
+        "err_px_L": 16.460545156878435
+      },
+      {
+        "image": "frame_02.png",
+        "detected": true,
+        "mediapipe_R": [
+          277.5712890625,
+          520.2225341796875
+        ],
+        "err_px_R": 13.554886750053642,
+        "mediapipe_L": [
+          779.3577880859375,
+          518.06103515625
+        ],
+        "err_px_L": 11.50964469450328
+      },
+      {
+        "image": "frame_03.png",
+        "detected": true,
+        "mediapipe_R": [
+          274.88671875,
+          529.6009521484375
+        ],
+        "err_px_R": 12.915462023760334,
+        "mediapipe_L": [
+          776.1328125,
+          527.089111328125
+        ],
+        "err_px_L": 9.902785686585496
+      },
+      {
+        "image": "frame_04.png",
+        "detected": true,
+        "mediapipe_R": [
+          274.07086181640625,
+          533.20361328125
+        ],
+        "err_px_R": 7.471045420115033,
+        "mediapipe_L": [
+          773.7069091796875,
+          531.0484619140625
+        ],
+        "err_px_L": 5.319848197854142
+      },
+      {
+        "image": "frame_05.png",
+        "detected": true,
+        "mediapipe_R": [
+          266.02569580078125,
+          533.4615478515625
+        ],
+        "err_px_R": 5.472431637269279,
+        "mediapipe_L": [
+          765.374267578125,
+          530.7655029296875
+        ],
+        "err_px_L": 4.113158856700067
+      },
+      {
+        "image": "frame_06.png",
+        "detected": true,
+        "mediapipe_R": [
+          257.2283935546875,
+          533.4512939453125
+        ],
+        "err_px_R": 8.863641762249346,
+        "mediapipe_L": [
+          758.5391845703125,
+          531.1143798828125
+        ],
+        "err_px_L": 8.810220173233757
+      },
+      {
+        "image": "frame_07.png",
+        "detected": true,
+        "mediapipe_R": [
+          252.04315185546875,
+          528.1995849609375
+        ],
+        "err_px_R": 12.456120187000034,
+        "mediapipe_L": [
+          753.3607177734375,
+          526.7381591796875
+        ],
+        "err_px_L": 12.40992241505332
+      },
+      {
+        "image": "frame_08.png",
+        "detected": true,
+        "mediapipe_R": [
+          252.2813720703125,
+          518.8201904296875
+        ],
+        "err_px_R": 13.813724321613217,
+        "mediapipe_L": [
+          754.4637451171875,
+          518.5733642578125
+        ],
+        "err_px_L": 14.994607820404394
+      },
+      {
+        "image": "frame_09.png",
+        "detected": true,
+        "mediapipe_R": [
+          257.6221923828125,
+          511.68438720703125
+        ],
+        "err_px_R": 14.776460298479613,
+        "mediapipe_L": [
+          760.0478515625,
+          511.510498046875
+        ],
+        "err_px_L": 15.886965966706272
+      }
+    ],
+    "note": "MediaPipe Face Landmarker (float16 v1) run on each render after a 0.5x downscale onto a padded canvas; iris landmarks 468/473 compared with our apparent (refraction-aware) pupil centroids. MediaPipe is trained on real faces and its landmark noise is a few px at this scale, so this is a sanity check, not ground truth."
+  },
+  "rows": [
+    {
+      "k": 0,
+      "theta_deg": 0.0,
+      "h": 0.0,
+      "v": 1.0,
+      "reproj_L": 0.019340901254249806,
+      "reproj_R": 0.013626324086353532,
+      "refr_L": 0.7095145991664101,
+      "refr_R": 0.7075565210252703,
+      "shift_L": 16.59505276916597,
+      "shift_R": 16.59505276916597,
+      "vergence_deg": 10.182691706901116,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.3642715026359089,
+      "torsion_full_deg": 0.18022913819851635,
+      "aperture_L": 13.771495671146553,
+      "aperture_R": 13.771495671146553,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 130.55
+    },
+    {
+      "k": 1,
+      "theta_deg": 36.0,
+      "h": 0.5877852522924731,
+      "v": 0.8090169943749475,
+      "reproj_L": 0.010575814445899424,
+      "reproj_R": 0.025636668187821107,
+      "refr_L": 0.6688387408896429,
+      "refr_R": 0.7203250199121461,
+      "shift_L": 16.723779445267645,
+      "shift_R": 16.453692144426576,
+      "vergence_deg": 10.14818405001905,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.5614311696712024,
+      "torsion_full_deg": 0.14625232101945732,
+      "aperture_L": 13.485821253874509,
+      "aperture_R": 13.467546808237387,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 137.72
+    },
+    {
+      "k": 2,
+      "theta_deg": 72.0,
+      "h": 0.9510565162951535,
+      "v": 0.30901699437494745,
+      "reproj_L": 0.019020612887840092,
+      "reproj_R": 0.020081237673909333,
+      "refr_L": 0.6720100196907706,
+      "refr_R": 0.781358853556155,
+      "shift_L": 16.79856679963174,
+      "shift_R": 16.36409552285307,
+      "vergence_deg": 10.092078351706206,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.2750323950197146,
+      "torsion_full_deg": 0.05577827708522518,
+      "aperture_L": 12.705716720183588,
+      "aperture_R": 12.694413777724574,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 140.44
+    },
+    {
+      "k": 3,
+      "theta_deg": 108.0,
+      "h": 0.9510565162951536,
+      "v": -0.30901699437494734,
+      "reproj_L": 0.018631792948741666,
+      "reproj_R": 0.03407016444100037,
+      "refr_L": 0.6910619188381502,
+      "refr_R": 0.7591819278053198,
+      "shift_L": 16.798075392000285,
+      "shift_R": 16.364099486994736,
+      "vergence_deg": 10.092078351706206,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.2750323950197146,
+      "torsion_full_deg": 0.05577827708522512,
+      "aperture_L": 11.72250910266159,
+      "aperture_R": 11.734274655029482,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 147.32
+    },
+    {
+      "k": 4,
+      "theta_deg": 144.0,
+      "h": 0.5877852522924732,
+      "v": -0.8090169943749473,
+      "reproj_L": 0.011091628961010494,
+      "reproj_R": 0.03995502078195015,
+      "refr_L": 0.6746290824601284,
+      "refr_R": 0.7574110365766936,
+      "shift_L": 16.722324944037656,
+      "shift_R": 16.453697260351408,
+      "vergence_deg": 10.148184050019015,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.5614311696712027,
+      "torsion_full_deg": 0.14625232101945693,
+      "aperture_L": 10.919941161627646,
+      "aperture_R": 10.939080839505252,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 135.22
+    },
+    {
+      "k": 5,
+      "theta_deg": 180.0,
+      "h": 1.2246467991473532e-16,
+      "v": -1.0,
+      "reproj_L": 0.004537072056504693,
+      "reproj_R": 0.021643280987308645,
+      "refr_L": 0.7161587747402193,
+      "refr_R": 0.7137159132643218,
+      "shift_L": 16.591112882288574,
+      "shift_R": 16.591112882288574,
+      "vergence_deg": 10.182691706901116,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.36427150263590896,
+      "torsion_full_deg": 0.1802291381985163,
+      "aperture_L": 10.620479960885168,
+      "aperture_R": 10.620479960885168,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 154.3
+    },
+    {
+      "k": 6,
+      "theta_deg": 216.0,
+      "h": -0.587785252292473,
+      "v": -0.8090169943749475,
+      "reproj_L": 0.03174115362310193,
+      "reproj_R": 0.025110724861377,
+      "refr_L": 0.7423638799533249,
+      "refr_R": 0.6762023066729164,
+      "shift_L": 16.453697260351575,
+      "shift_R": 16.722324944037705,
+      "vergence_deg": 10.14818405001905,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.5614311696712024,
+      "torsion_full_deg": 0.14625232101945748,
+      "aperture_L": 10.939080839505252,
+      "aperture_R": 10.919941161627646,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 238.21
+    },
+    {
+      "k": 7,
+      "theta_deg": 252.0,
+      "h": -0.9510565162951535,
+      "v": -0.30901699437494756,
+      "reproj_L": 0.026299355961886643,
+      "reproj_R": 0.03008659755140464,
+      "refr_L": 0.7424639122330893,
+      "refr_R": 0.6953867001745673,
+      "shift_L": 16.364099486994842,
+      "shift_R": 16.798075392000367,
+      "vergence_deg": 10.092078351706206,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.2750323950197146,
+      "torsion_full_deg": 0.05577827708522518,
+      "aperture_L": 11.734274655029482,
+      "aperture_R": 11.72250910266159,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 112.78
+    },
+    {
+      "k": 8,
+      "theta_deg": 288.0,
+      "h": -0.9510565162951536,
+      "v": 0.30901699437494723,
+      "reproj_L": 0.01310572992060214,
+      "reproj_R": 0.018825545117039776,
+      "refr_L": 0.737990136368803,
+      "refr_R": 0.6514993331013348,
+      "shift_L": 16.364095522853177,
+      "shift_R": 16.798566799631768,
+      "vergence_deg": 10.092078351706206,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.2750323950197146,
+      "torsion_full_deg": 0.05577827708522512,
+      "aperture_L": 12.694413777724574,
+      "aperture_R": 12.705716720183588,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 99.71
+    },
+    {
+      "k": 9,
+      "theta_deg": 324.0,
+      "h": -0.5877852522924734,
+      "v": 0.8090169943749473,
+      "reproj_L": 0.013525341712238086,
+      "reproj_R": 0.011893807639126456,
+      "refr_L": 0.7077631948955878,
+      "refr_R": 0.6427798034562356,
+      "shift_L": 16.45369214442651,
+      "shift_R": 16.72377944526763,
+      "vergence_deg": 10.148184050019015,
+      "torsion_physio_deg": 0.0,
+      "torsion_spec_deg": 0.5614311696712027,
+      "torsion_full_deg": 0.14625232101945704,
+      "aperture_L": 13.467546808237387,
+      "aperture_R": 13.485821253874509,
+      "pupil_mm": 3.5100505063388336,
+      "render_s": 97.87
+    }
+  ]
+}

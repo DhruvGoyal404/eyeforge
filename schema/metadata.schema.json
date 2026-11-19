@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eyeforge/metadata.schema.json",
+  "title": "EyeForge metadata.json",
+  "type": "object",
+  "required": ["conventions", "scene", "frames"],
+  "properties": {
+    "conventions": {"type": "object"},
+    "scene": {
+      "type": "object",
+      "required": ["blender_version", "engine", "samples", "seed", "lens_mm", "sensor_width_mm",
+                   "ipd_m", "eyeball_radius_m", "M", "targets_T", "lights", "resolution"],
+      "properties": {
+        "resolution": {"const": [1024, 1024]},
+        "M": {"$ref": "#/$defs/vec3"},
+        "targets_T": {"type": "array", "items": {"$ref": "#/$defs/vec3"}}
+      }
+    },
+    "center": {"$ref": "#/$defs/record"},
+    "frames": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"$ref": "#/$defs/record"}}
+  },
+  "$defs": {
+    "num": {"type": "number"},
+    "vec2": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+    "vec3": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3},
+    "record": {
+      "type": "object",
+      "required": ["frame", "theta", "input", "eye_rotation_L", "eye_rotation_R",
+                   "pupil_center_2D_L", "pupil_center_2D_R", "camera_matrix", "extended"],
+      "properties": {
+        "frame": {"type": ["integer", "null"], "minimum": 0},
+        "theta": {"type": "number", "minimum": 0, "maximum": 6.2832},
+        "input": {
+          "type": "object", "required": ["h", "v"], "additionalProperties": false,
+          "properties": {"h": {"type": "number", "minimum": -1, "maximum": 1},
+                         "v": {"type": "number", "minimum": -1, "maximum": 1}}
+        },
+        "eye_rotation_L": {"$ref": "#/$defs/vec3"},
+        "eye_rotation_R": {"$ref": "#/$defs/vec3"},
+        "pupil_center_2D_L": {"$ref": "#/$defs/vec2"},
+        "pupil_center_2D_R": {"$ref": "#/$defs/vec2"},
+        "camera_matrix": {
+          "type": "array", "minItems": 3, "maxItems": 3,
+          "items": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4}
+        },
+        "extended": {
+          "type": "object",
+          "required": ["quaternion_wxyz_L", "quaternion_wxyz_R", "gaze_vector_L", "gaze_vector_R",
+                       "pupil_center_3D_L", "pupil_center_3D_R", "eyeball_center_3D_L",
+                       "eyeball_center_3D_R", "vergence_rad", "torsion_rad_L", "torsion_rad_R",
+                       "pupil_diameter_mm", "lid_aperture_mm_L", "lid_aperture_mm_R", "K", "R", "t",
+                       "pupil_center_2D_apparent_L", "pupil_center_2D_apparent_R",
+                       "pupil_center_2D_geometric_mask_L", "pupil_center_2D_geometric_mask_R",
+                       "reprojection_error_px", "refraction_shift_px"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "rows": [
+    {
+      "direction": "left",
+      "eye": "L",
+      "dx": -17.024112548441394,
+      "dy": 0.005715225307199034,
+      "on_axis_px": 17.024112548441394,
+      "off_axis_ratio": 0.0003357135528173114,
+      "passed": true
+    },
+    {
+      "direction": "left",
+      "eye": "R",
+      "dx": -17.483706202348543,
+      "dy": 0.015668614652270207,
+      "on_axis_px": 17.483706202348543,
+      "off_axis_ratio": 0.0008961838222930949,
+      "passed": true
+    },
+    {
+      "direction": "right",
+      "eye": "L",
+      "dx": 17.50374770618123,
+      "dy": 0.004209363480413231,
+      "on_axis_px": 17.50374770618123,
+      "off_axis_ratio": 0.00024048355535464822,
+      "passed": true
+    },
+    {
+      "direction": "right",
+      "eye": "R",
+      "dx": 17.058145709866437,
+      "dy": 0.012099053203144194,
+      "on_axis_px": 17.058145709866437,
+      "off_axis_ratio": 0.0007092830257714412,
+      "passed": true
+    },
+    {
+      "direction": "up",
+      "eye": "L",
+      "dx": 0.007021743811719716,
+      "dy": -17.30352735795219,
+      "on_axis_px": 17.30352735795219,
+      "off_axis_ratio": 0.00040579840551948097,
+      "passed": true
+    },
+    {
+      "direction": "up",
+      "eye": "R",
+      "dx": 0.040162283218762695,
+      "dy": -17.282514211053012,
+      "on_axis_px": 17.282514211053012,
+      "off_axis_ratio": 0.002323868085875894,
+      "passed": true
+    },
+    {
+      "direction": "down",
+      "eye": "L",
+      "dx": 0.009288925839769036,
+      "dy": 17.29814553511642,
+      "on_axis_px": 17.29814553511642,
+      "off_axis_ratio": 0.0005369896918089792,
+      "passed": true
+    },
+    {
+      "direction": "down",
+      "eye": "R",
+      "dx": 0.014962118271114377,
+      "dy": 17.303418774793215,
+      "on_axis_px": 17.303418774793215,
+      "off_axis_ratio": 0.0008646914500451476,
+      "passed": true
+    }
+  ],
+  "reset_px": [
+    0.0,
+    0.0
+  ],
+  "passed": true,
+  "min_shift_px": 15.0,
+  "max_offaxis_ratio": 0.3,
+  "reset_tol_px": 0.5,
+  "fast": false
+}

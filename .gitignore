@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+scratch/
+dist/
+data/
+reports/direction/
+reports/determinism/
+reports/camera/
+renders/extra/
+*.blend1
+.pytest_cache/
+node_modules/
+docs/video_frames/
+assets/models/
