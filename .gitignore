@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 scratch/
 dist/
-data/
+
 reports/direction/
 reports/determinism/
 reports/camera/
@@ -13,3 +13,7 @@ renders/extra/
 node_modules/
 docs/video_frames/
 assets/models/
+!data/
+data/*
+!data/overlay_grid.png
+!data/stats.json

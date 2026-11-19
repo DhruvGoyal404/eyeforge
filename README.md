@@ -247,4 +247,14 @@ Code: MIT. Head: MPFB2 + MakeHuman system assets (CC0). Eyes and materials: proc
 - **Render speed.** Cycles on CPU takes about 2 min per frame on a 12-thread laptop (i5-1235U).
   CI uses mask-only renders.
 - **MediaPipe** is a sanity check. It needs a padded, downscaled copy of each render to detect the
-  face, because the required framing is tight on the eyes.
+  face, because the required framing is tight on the eyes. Its iris centers agree with our labels on motion
+  direction (mean cosine 0.97). The absolute offset (~12 px) reflects MediaPipe working at half
+  resolution on a synthetic face, so it is reported, not asserted.
+- **Factory and glasses.** With glasses on, the geometric 2D labels ignore spectacle
+  refraction. Use the masks and `pupil_ellipse_apparent`, which are measured from the render.
+  MPFB age/ethnicity variation would need a scene rebuild per identity and is not randomized.
+- **Docker.** The Dockerfile follows the same steps as CI (pinned Blender 4.2.23 tarball,
+  pinned pip deps), but it was not built on the development laptop because Docker Desktop's
+  engine would not start there. CI on GitHub Actions runs the headless test subset.
+- **Phase 6 (sim-to-real CNN)** is not done. It needs a real-eye dataset slice (MPIIGaze or
+  ETH-XGaze) with its license checked.
