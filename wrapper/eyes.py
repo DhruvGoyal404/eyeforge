@@ -535,6 +535,7 @@ def _cli(argv: list[str]) -> None:
     a = sub.add_parser("animate", help="physiological saccade/blink clip (cheap eye-region renders)")
     a.add_argument("--out", default="renders/extra/anim")
     a.add_argument("--fps", type=int, default=30)
+    a.add_argument("--percent", type=int, default=50, help="render resolution percentage")
     a.add_argument("--targets", default="0,0;1,0;-0.7,0.7;0,-1;0.7,0.7;-1,0;0,0",
                    help="'h,v;h,v;...' fixation sequence")
     args = ap.parse_args(argv)
@@ -553,7 +554,7 @@ def _cli(argv: list[str]) -> None:
         rig.sequence(args.out, args.n, meta_path=args.meta, with_masks=not args.no_masks)
     elif args.cmd == "animate":
         tg = [tuple(float(x) for x in t.split(",")) for t in args.targets.split(";")]
-        rig.animate(tg, args.fps, out_dir=args.out)
+        rig.animate(tg, args.fps, out_dir=args.out, percent=args.percent)
     elif args.cmd == "pose":
         rec = rig.move(args.h, args.v)
         if args.render:

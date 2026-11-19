@@ -1,0 +1,8 @@
+{
+  "samples": 200,
+  "images": 400,
+  "glints_expected": 1942,
+  "glints_verified": 989,
+  "glint_verify_rate": 0.5092687950566427,
+  "glint_offset_px_mean": 1.7589926340999873
+}

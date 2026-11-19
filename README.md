@@ -193,6 +193,17 @@ Each image is labelled with:
 - class masks (skin, sclera, iris, pupil, lashes/brows) as seen through the cornea
 - gaze and optical axes, and the lid aperture
 
+Smoke run (`--n 200 --seed 0`): 200 samples, 400 IR images. 1,942 glints were predicted on
+the cornea, and 989 (51 %) were confirmed as bright peaks in the rendered image within 3 px
+(mean offset 1.76 px). The rest are hidden by lids or lashes, or are too faint against the iris
+to count as a peak. `data/overlay_grid.png` shows the labels drawn on the images: limbus in
+yellow, geometric pupil in green, apparent pupil in cyan, glints in red.
+
+![factory overlay](data/overlay_grid.png)
+
+The slide deck draft is `docs/Thapar_Orchestrators_EyeForge.pptx` (built by `tools/make_deck.py` from
+`reports/validation.json`).
+
 The **web demo** (`web/`) loads the exported glTF. It drives the same eye and lid bones with
 `web/physiology.js`, a port of `physiology.py` that `tests/test_web_parity.py` checks matches
 Python to 1e-12. Inputs are sliders or your webcam: MediaPipe iris landmarks relative to the eye
@@ -253,8 +264,9 @@ Code: MIT. Head: MPFB2 + MakeHuman system assets (CC0). Eyes and materials: proc
 - **Factory and glasses.** With glasses on, the geometric 2D labels ignore spectacle
   refraction. Use the masks and `pupil_ellipse_apparent`, which are measured from the render.
   MPFB age/ethnicity variation would need a scene rebuild per identity and is not randomized.
-- **Docker.** The Dockerfile follows the same steps as CI (pinned Blender 4.2.23 tarball,
-  pinned pip deps), but it was not built on the development laptop because Docker Desktop's
-  engine would not start there. CI on GitHub Actions runs the headless test subset.
+- **Docker.** The image was built and run on the development laptop (pinned Blender 4.2.23
+  Linux tarball, pinned pip deps). Inside the container, 100 tests pass on the committed scene,
+  including the headless direction self-test. A full `run_all.sh` in the container takes as long
+  as a native run (~1 h on a 12-thread laptop CPU).
 - **Phase 6 (sim-to-real CNN)** is not done. It needs a real-eye dataset slice (MPIIGaze or
   ETH-XGaze) with its license checked.
