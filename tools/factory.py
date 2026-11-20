@@ -59,6 +59,9 @@ def blender_main(args) -> None:
     body = sc.objects["EF_Body"]
     skin_slots = [(s, s.material) for s in body.material_slots]
     glasses = _glasses(bpy, rig)
+    for m in body.modifiers:  # ray casts see viewport geometry: match the render subdivision
+        if m.type == "SUBSURF":
+            m.levels = m.render_levels
     U, F, Rimg = (np.array(info[k]) for k in ("U", "F", "R_img"))
 
     out = Path(args.out)
@@ -66,7 +69,8 @@ def blender_main(args) -> None:
         (out / d).mkdir(parents=True, exist_ok=True)
     k, n_shards = (int(x) for x in args.shard.split("/"))
     for i in range(args.start, args.start + args.n):
-        if i % n_shards != k or (out / "labels" / f"{i:06d}.json").exists():
+        exists = (out / "labels" / f"{i:06d}.json").exists()
+        if i % n_shards != k or exists != args.relabel:  # render new ids, or relabel existing ones
             continue
         rng = np.random.default_rng([args.seed, i])
         # ---- domain randomization
@@ -129,14 +133,17 @@ def blender_main(args) -> None:
                 g = _glint(cc, info["cornea_radius_mm"] / 1000, np.array(L.matrix_world.translation), cam_loc)
                 on_cap = float((g - cc) @ ax_z) / (info["cornea_radius_mm"] / 1000) > math.cos(
                     math.asin(info["limbus_radius_mm"] / info["cornea_radius_mm"]))
+                led_loc = np.array(L.matrix_world.translation)
+                vis = on_cap and _clear(bpy, sc, cam_loc, g, side) and _clear(bpy, sc, led_loc, g, side)
                 glints.append(dict(led=j, xy=calib.project(P, g).tolist(), on_cornea=bool(on_cap),
-                                   point_3D=g.tolist()))
+                                   visible=bool(vis), point_3D=g.tolist()))
             stem = f"{i:06d}_{side}"
-            sc.render.filepath = str((out / "images" / f"{stem}.png").resolve())
-            sc.render.image_settings.color_mode = "BW"
-            bpy.ops.render.render(write_still=True)
-            sc.render.image_settings.color_mode = "RGB"
-            _class_mask(bpy, sc, ir, out / "masks" / f"{stem}_rgb.png", skin_slots)
+            if not args.relabel:
+                sc.render.filepath = str((out / "images" / f"{stem}.png").resolve())
+                sc.render.image_settings.color_mode = "BW"
+                bpy.ops.render.render(write_still=True)
+                sc.render.image_settings.color_mode = "RGB"
+                _class_mask(bpy, sc, ir, out / "masks" / f"{stem}_rgb.png", skin_slots)
             for s, _ in skin_slots:
                 s.material = ir["skin"]
             for L in leds:
@@ -153,8 +160,73 @@ def blender_main(args) -> None:
                 lid_aperture_mm=e[f"lid_aperture_mm_{side}"])
         for s, m in skin_slots:
             s.material = m
+        if args.relabel:  # same seed -> same pose: the stored glints must be reproduced exactly
+            old = json.loads((out / "labels" / f"{i:06d}.json").read_text())
+            for side in "LR":
+                a = np.array([g["xy"] for g in old["eyes"][side]["glints"]])
+                b = np.array([g["xy"] for g in label["eyes"][side]["glints"]])
+                assert np.abs(a - b).max() < 1e-3, f"sample {i}{side}: relabel pose mismatch"
         (out / "labels" / f"{i:06d}.json").write_text(json.dumps(label))
         print(f"[factory] sample {i} done", flush=True)
+
+
+_ALPHA: dict = {}
+
+
+def _alpha_at(bpy, obj, face, loc) -> float:
+    """Texture alpha of an alpha-card mesh (lash/brow) at a ray hit: barycentric UV on the hit face."""
+    me = obj.evaluated_get(bpy.context.evaluated_depsgraph_get()).data
+    poly = me.polygons[face]
+    p = np.array(obj.matrix_world.inverted() @ loc)
+    vs, ls = list(poly.vertices), list(poly.loop_indices)
+    uv = me.uv_layers.active.data
+    for k in range(1, len(vs) - 1):  # fan-triangulate the polygon, find the triangle holding p
+        a, b, c = (np.array(me.vertices[vs[j]].co) for j in (0, k, k + 1))
+        v0, v1, v2 = b - a, c - a, p - a
+        d00, d01, d11, d20, d21 = v0 @ v0, v0 @ v1, v1 @ v1, v2 @ v0, v2 @ v1
+        den = d00 * d11 - d01 * d01
+        if abs(den) < 1e-20:
+            continue
+        w1 = (d11 * d20 - d01 * d21) / den
+        w2 = (d00 * d21 - d01 * d20) / den
+        if w1 >= -1e-3 and w2 >= -1e-3 and w1 + w2 <= 1 + 1e-3:
+            t = (1 - w1 - w2) * np.array(uv[ls[0]].uv) + w1 * np.array(uv[ls[k]].uv) + w2 * np.array(uv[ls[k + 1]].uv)
+            break
+    else:
+        return 1.0  # outside every triangle (numerical edge): treat as opaque
+    img = next(n.image for n in obj.active_material.node_tree.nodes if n.bl_idname == "ShaderNodeTexImage")
+    if img.name not in _ALPHA:
+        px = np.empty(img.size[0] * img.size[1] * 4, np.float32)
+        img.pixels.foreach_get(px)
+        _ALPHA[img.name] = px.reshape(img.size[1], img.size[0], 4)[..., 3]
+    a = _ALPHA[img.name]
+    h, w = a.shape
+    return float(a[int(t[1] % 1.0 * (h - 1)), int(t[0] % 1.0 * (w - 1))])
+
+
+def _clear(bpy, sc, origin, target, side) -> bool:
+    """Ray-cast occlusion test: the segment origin->target must first meet this eye's cornea at
+    the target. Lid/skin hits occlude; lash and brow cards occlude only where their texture alpha
+    is opaque (> 0.5); glasses and the other cornea are see-through."""
+    from mathutils import Vector
+    dg = bpy.context.evaluated_depsgraph_get()
+    o, t = Vector(origin), Vector(target)
+    for _ in range(32):
+        d = t - o
+        dist = d.length
+        hit, loc, _, face, obj, _ = sc.ray_cast(dg, o, d.normalized(), distance=dist + 1e-4)
+        if not hit:
+            return True
+        name = obj.name.lower()
+        if obj.name == f"EF_Cornea.{side}" and (loc - t).length < 3e-4:
+            return True
+        if ("lash" in name or "brow" in name) and _alpha_at(bpy, obj, face, loc) > 0.5:
+            return False
+        if "lash" in name or "brow" in name or "glasses" in name or name.startswith("ef_cornea"):
+            o = loc + d.normalized() * 1e-5
+            continue
+        return False
+    return False
 
 
 def _glint(cc, r, led, cam, iters: int = 40):
@@ -305,7 +377,8 @@ def finalize(out: Path) -> dict:
     from PIL import Image, ImageDraw
     labels = sorted((out / "labels").glob("*.json"))
     coco = dict(images=[], annotations=[], categories=[dict(id=k, name=v) for k, v in CLASSES.items()])
-    ann_id, glint_err, glint_n, glint_found = 0, [], 0, 0
+    ann_id, glint_err, on_cornea_n = 0, [], 0
+    vis = {False: [0, 0], True: [0, 0]}  # glasses -> [visible glints, confirmed in render]
     with open(out / "labels.jsonl", "w") as jl:
         for lp in labels:
             lab = json.loads(lp.read_text())
@@ -323,21 +396,25 @@ def finalize(out: Path) -> dict:
                 big = max(cs, key=len) if cs else None
                 e["pupil_ellipse_apparent"] = (_ellipse(cv2, big[:, 0, :].astype(float) + 0.5)
                                                if big is not None and len(big) >= 6 else None)
-                for g in e["glints"]:  # verify each predicted glint against the rendered image
+                for g in e["glints"]:  # verify each predicted visible glint against the rendered image
                     x, y = g["xy"]
                     g["visible_in_render"] = False
-                    if not g["on_cornea"] or not (3 <= x < img.shape[1] - 3 and 3 <= y < img.shape[0] - 3):
+                    if g["on_cornea"]:
+                        on_cornea_n += 1
+                    g["through_glasses"] = lab["glasses"]  # position is unrefracted: lens shifts the real glint
+                    if not g.get("visible") or not (3 <= x < img.shape[1] - 3 and 3 <= y < img.shape[0] - 3):
                         continue
-                    glint_n += 1
+                    vis[lab["glasses"]][0] += 1
                     win = img[int(y) - 3:int(y) + 4, int(x) - 3:int(x) + 4]
                     ctx = img[max(0, int(y) - 8):int(y) + 9, max(0, int(x) - 8):int(x) + 9]
                     # a glint is a local peak clearly brighter than its surroundings, on the eye
-                    if win.max() >= np.median(ctx) + 40 and idx[int(y), int(x)] in (2, 3, 4):
+                    if win.max() >= np.median(ctx) + 40 and idx[int(y), int(x)] != 0:
                         yy, xx = np.unravel_index(np.argmax(win), win.shape)
                         err = math.hypot(int(x) - 3 + xx + 0.5 - x, int(y) - 3 + yy + 0.5 - y)
                         g["visible_in_render"], g["render_offset_px"] = True, err
-                        glint_err.append(err)
-                        glint_found += 1
+                        vis[lab["glasses"]][1] += 1
+                        if not lab["glasses"]:
+                            glint_err.append(err)
                 img_id = len(coco["images"])
                 coco["images"].append(dict(id=img_id, file_name=e["image"], width=img.shape[1], height=img.shape[0]))
                 for c in CLASSES:
@@ -354,8 +431,16 @@ def finalize(out: Path) -> dict:
                     ann_id += 1
             jl.write(json.dumps(lab) + "\n")
     (out / "coco.json").write_text(json.dumps(coco))
-    stats = dict(samples=len(labels), images=len(coco["images"]), glints_expected=glint_n,
-                 glints_verified=glint_found, glint_verify_rate=glint_found / max(1, glint_n),
+    stats = dict(samples=len(labels), images=len(coco["images"]), glints_on_cornea=on_cornea_n,
+                 glints_visible=vis[False][0] + vis[True][0], glints_visible_no_glasses=vis[False][0],
+                 glints_verified_no_glasses=vis[False][1],
+                 glint_verify_rate=vis[False][1] / max(1, vis[False][0]),
+                 glint_verify_rate_glasses=vis[True][1] / max(1, vis[True][0]),
+                 note="glint_verify_rate (no glasses) = rendered peaks found within 3 px / glints flagged visible "
+                      "(on the corneal cap, camera->glint and LED->glint rays unoccluded by lids, skin "
+                      "or opaque lash/brow texels). With glasses the lens refracts the camera and LED paths, so the "
+                      "geometric glint labels (through_glasses=true) are not refraction-corrected; see "
+                      "glint_verify_rate_glasses",
                  glint_offset_px_mean=float(np.mean(glint_err)) if glint_err else None)
     (out / "stats.json").write_text(json.dumps(stats, indent=2))
     overlay_grid(out, labels[:24])
@@ -389,7 +474,7 @@ def overlay_grid(out: Path, label_files) -> None:
                            for t in np.linspace(0, 2 * math.pi, 60)]
                     d.line(pts + [pts[0]], fill=col, width=1)
             for g in e["glints"]:
-                if g["on_cornea"]:
+                if g.get("visible"):  # occluded glints are not drawn
                     x, y = g["xy"]
                     d.ellipse([x - 3, y - 3, x + 3, y + 3], outline=(255, 0, 0) if g.get("visible_in_render")
                               else (120, 0, 0))
@@ -417,6 +502,8 @@ def main() -> None:
     ap.add_argument("--out", default=str(ROOT / "data"))
     ap.add_argument("--shard", default="0/1", help="k/N: this worker renders ids with id % N == k")
     ap.add_argument("--finalize", action="store_true", help="only build labels.jsonl/COCO/overlay")
+    ap.add_argument("--relabel", action="store_true",
+                    help="recompute labels (incl. glint visibility) for existing samples without rendering")
     args = ap.parse_args(argv)
     try:
         import bpy  # noqa: F401

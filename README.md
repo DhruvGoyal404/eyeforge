@@ -5,6 +5,14 @@
 **Samsung PRISM XR Hackathon 2026, Track 1: Synthetic Eye Movement & Virtual Camera Rendering**
 Team **Orchestrators** (Thapar Institute of Engineering and Technology): Vaani Prashar, Dhruv Goyal.
 
+| Submission | Link |
+|---|---|
+| **Package** (`scene.blend`, `wrapper/eyes.py`, `renders/`, `metadata.json`, `README.md`) | [Thapar_Orchestrators.zip](https://github.com/DhruvGoyal404/eyeforge/releases/download/v1.0/Thapar_Orchestrators.zip) (Release [v1.0](https://github.com/DhruvGoyal404/eyeforge/releases/tag/v1.0)) |
+| **Presentation** (official template) | [docs/Thapar_Orchestrators_Submission.pptx](docs/Thapar_Orchestrators_Submission.pptx) |
+| **Demo video** | [docs/demo.mp4](docs/demo.mp4) |
+| **Live web demo** | [dhruvgoyal404.github.io/eyeforge](https://dhruvgoyal404.github.io/eyeforge/) |
+| **Validation report** | [reports/validation.md](reports/validation.md) |
+
 > Others move pupils. EyeForge simulates eyes: true 3D eyeball rotation that follows Listing's
 > law, real binocular vergence at 35 cm, eyelids that follow gaze, refraction-aware pupil labels
 > verified against the actual render, and an XR-style near-eye pipeline that produces
@@ -193,16 +201,24 @@ Each image is labelled with:
 - class masks (skin, sclera, iris, pupil, lashes/brows) as seen through the cornea
 - gaze and optical axes, and the lid aperture
 
-Smoke run (`--n 200 --seed 0`): 200 samples, 400 IR images. 1,942 glints were predicted on
-the cornea, and 989 (51 %) were confirmed as bright peaks in the rendered image within 3 px
-(mean offset 1.76 px). The rest are hidden by lids or lashes, or are too faint against the iris
-to count as a peak. `data/overlay_grid.png` shows the labels drawn on the images: limbus in
-yellow, geometric pupil in green, apparent pupil in cyan, glints in red.
+Smoke run (`--n 200 --seed 0`): 200 samples, 400 IR images, 1,945 glints predicted on the
+cornea. Each glint has a `visible` flag from two ray casts, camera→glint and LED→glint:
+- Lids and skin occlude it.
+- Lash and brow cards occlude it only where their texture alpha is opaque.
+
+That leaves 1,582 visible glints. On images without glasses, **97.7 %** of visible glints
+(1,089 / 1,115) are confirmed as bright peaks in the render within 3 px, with a mean offset of
+1.7 px. With glasses on, the spectacle lens refracts both the camera and LED paths, and the
+geometric glint positions are not refraction-corrected. Those glints carry
+`through_glasses: true`, and only 12.6 % of them land within 3 px. Use them only together with
+the rendered image and masks. `data/overlay_grid.png` shows the labels on the images: limbus in
+yellow, geometric pupil in green, apparent pupil in cyan, visible glints in red.
 
 ![factory overlay](data/overlay_grid.png)
 
-The slide deck draft is `docs/Thapar_Orchestrators_EyeForge.pptx` (built by `tools/make_deck.py` from
-`reports/validation.json`).
+The submission deck `docs/Thapar_Orchestrators_Submission.pptx` is the official template
+(`docs/template/Submission_Final_forGithub.pptx`) filled by `tools/make_deck.py` with the numbers in
+`reports/validation.json` and `data/stats.json`.
 
 The **web demo** (`web/`) loads the exported glTF. It drives the same eye and lid bones with
 `web/physiology.js`, a port of `physiology.py` that `tests/test_web_parity.py` checks matches
@@ -262,7 +278,8 @@ Code: MIT. Head: MPFB2 + MakeHuman system assets (CC0). Eyes and materials: proc
   direction (mean cosine 0.97). The absolute offset (~12 px) reflects MediaPipe working at half
   resolution on a synthetic face, so it is reported, not asserted.
 - **Factory and glasses.** With glasses on, the geometric 2D labels ignore spectacle
-  refraction. Use the masks and `pupil_ellipse_apparent`, which are measured from the render.
+  refraction, and glints are flagged `through_glasses`. Use the masks and
+  `pupil_ellipse_apparent`, which are measured from the render.
   MPFB age/ethnicity variation would need a scene rebuild per identity and is not randomized.
 - **Docker.** The image was built and run on the development laptop (pinned Blender 4.2.23
   Linux tarball, pinned pip deps). Inside the container, 100 tests pass on the committed scene,

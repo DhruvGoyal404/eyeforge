@@ -41,7 +41,8 @@ def main() -> None:
                 "extras/center.png": ROOT / "renders" / "center.png",
                 "extras/validation.md": ROOT / "reports" / "validation.md",
                 "tools/contact_sheet.py": ROOT / "tools" / "contact_sheet.py",
-                "demo.mp4": ROOT / "docs" / "demo.mp4", "LICENSE": ROOT / "LICENSE",
+                "demo.mp4": ROOT / "docs" / "demo.mp4",
+                "Thapar_Orchestrators_Submission.pptx": ROOT / "docs" / "Thapar_Orchestrators_Submission.pptx", "LICENSE": ROOT / "LICENSE",
                 "ASSETS.md": ROOT / "ASSETS.md", "requirements.txt": ROOT / "requirements.txt"}
     missing = [k for k, p in required.items() if not p.exists()]
     if missing:

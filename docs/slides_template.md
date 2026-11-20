@@ -1,6 +1,6 @@
 # EyeForge: slide content (official deck template)
 
-Deck file name: `Thapar_Orchestrators_EyeForge.pptx`. Every number below comes from
+Deck file name: `Thapar_Orchestrators_Submission.pptx (official template)`. Every number below comes from
 `reports/validation.json` (regenerate with `python tools/make_report.py`).
 
 ---
@@ -87,7 +87,7 @@ saccades/blinks → results. Live: `npx serve web` (webcam gaze drives the avata
 - Saccades follow the main sequence (2.2 ms/° + 21 ms) with a minimum-jerk profile; microsaccades < 0.5°; blinks
   close in 100 ms and open in 150 ms.
 - XR near-eye dataset factory: IR cameras 3 cm from the eye, 8-LED rings, glints solved on the corneal sphere and
-  verified against the render ({glint_rate:.0%} found within 3 px), pupil/limbus ellipses, COCO masks.
+  ray-cast for visibility past lids and lashes, and verified against the render ({glint_rate:.1%} of visible glints found within 3 px on images without glasses), pupil/limbus ellipses, COCO masks.
 - Browser twin: the same physiology in JS (parity with Python to 1e-12), driven by your webcam.
 
 Figures: `data/overlay_grid.png`, `docs/web_demo.png`, frames from `docs/demo.mp4`.

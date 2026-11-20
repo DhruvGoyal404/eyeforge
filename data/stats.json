@@ -1,8 +1,12 @@
 {
   "samples": 200,
   "images": 400,
-  "glints_expected": 1942,
-  "glints_verified": 989,
-  "glint_verify_rate": 0.5092687950566427,
-  "glint_offset_px_mean": 1.7589926340999873
+  "glints_on_cornea": 1945,
+  "glints_visible": 1582,
+  "glints_visible_no_glasses": 1115,
+  "glints_verified_no_glasses": 1089,
+  "glint_verify_rate": 0.9766816143497757,
+  "glint_verify_rate_glasses": 0.12633832976445397,
+  "note": "glint_verify_rate (no glasses) = rendered peaks found within 3 px / glints flagged visible (on the corneal cap, camera->glint and LED->glint rays unoccluded by lids, skin or opaque lash/brow texels). With glasses the lens refracts the camera and LED paths, so the geometric glint labels (through_glasses=true) are not refraction-corrected; see glint_verify_rate_glasses",
+  "glint_offset_px_mean": 1.712515625177702
 }
