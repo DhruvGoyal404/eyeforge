@@ -160,7 +160,7 @@ def main() -> None:
     # 3 ---- solution
     picture(S[2], ROOT / "renders" / "contact_sheet.png", 0.35, 1.1, w=4.9)
     bullets(S[2], 5.45, 1.05, 4.3, 4.4, [
-        ("h", "Rig: real anatomy on a CC0 head"),
+        ("h", "Anatomically proportioned eye on a CC0 head"),
         "MPFB2 head with eye.L / eye.R bones snapped onto least-squares-fitted eyeball centers.",
         "Layered eye: veined sclera, limbal ring, fibrous iris, real pupil, glass cornea "
         "(R 7.8 mm, IOR 1.376).",

@@ -31,6 +31,17 @@ real render.
 
 ## Quick start
 
+Quick check (low samples, no mask passes). This took 659 s (~11 min, ~60 s per frame) on a
+12-thread laptop CPU (i5-1235U); expect a few minutes on a desktop CPU:
+```bash
+export BLENDER_PATH=/path/to/blender
+python wrapper/eyes.py --samples 16 sequence --out quick_renders --no-masks --meta quick_renders/metadata.json
+```
+`--meta` keeps the quick run from overwriting the committed `metadata.json`. The committed renders
+in `renders/` and `metadata.json` use the full quality settings (48 samples with OpenImageDenoise,
+plus the pupil mask passes). Pupil coordinates are geometric, so they are identical at any
+sample count.
+
 Native (Blender 4.2 LTS + Python 3.11+):
 ```bash
 pip install -r requirements.txt
@@ -256,6 +267,9 @@ Code: MIT. Head: MPFB2 + MakeHuman system assets (CC0). Eyes and materials: proc
 - **The lens is free.** The spec fixes the camera position and orientation only, so the lens is
   auto-calibrated (see above).
 - **pupil_center_2D is geometric.** The refraction-aware centroid is provided as an extra.
+- **The spec's sample record is off by one frame.** It lists frame 3 with v = 0.309, but
+  cos(2π·3/10) = −0.309; those sample values belong to frame 2. We follow the stated formula
+  h = sin θk, v = cos θk exactly.
 - **The required 10 frames use the `physio` profile.** It has no kappa, so a centered gaze looks
   centered.
 

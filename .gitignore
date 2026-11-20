@@ -17,3 +17,4 @@ assets/models/
 data/*
 !data/overlay_grid.png
 !data/stats.json
+quick_renders/
