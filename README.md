@@ -12,6 +12,7 @@ Team **Orchestrators** (Thapar Institute of Engineering and Technology): Vaani P
 | **Demo video** | [docs/demo.mp4](docs/demo.mp4) |
 | **Live web demo** | [dhruvgoyal404.github.io/eyeforge](https://dhruvgoyal404.github.io/eyeforge/) |
 | **Validation report** | [reports/validation.md](reports/validation.md) |
+| **AI disclosure** | [AI_DISCLOSURE.md](AI_DISCLOSURE.md) |
 
 > Others move pupils. EyeForge simulates eyes: true 3D eyeball rotation that follows Listing's
 > law, real binocular vergence at 35 cm, eyelids that follow gaze, refraction-aware pupil labels
